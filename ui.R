@@ -1,0 +1,52 @@
+shinyUI(
+  pageWithSidebar(
+    headerPanel("Exploratory Regression Using MTCARS"),
+    sidebarPanel(
+      h2('Response'),
+      selectInput('response','Select a variable:',
+                  choices=c('mpg','disp','hp','drat','wt','qsec'),
+                  selected="mpg"),
+      h2('Regressors'),
+      h4('Be careful not to check the response variable!'),
+      checkboxInput('intercept','Intercept',TRUE),
+      checkboxInput('mpg','(mpg) Miles per gallon',FALSE),
+      checkboxInput('cyl','(cyl) Number of cylinders',FALSE),
+      checkboxInput('disp','(disp) Displacement (cu.in.)',FALSE),
+      checkboxInput('hp','(hp) Gross horsepower',FALSE),
+      checkboxInput('drat','(drat) Rear axle ratio',FALSE),
+      checkboxInput('wt','(wt) Weight (1,000 lbs)',FALSE),
+      checkboxInput('qsec','(qsec) 1/4 mile time',FALSE),
+      checkboxInput('vs','(vs) V/S',FALSE),
+      checkboxInput('am','(am) Transmission type',FALSE),
+      checkboxInput('gear','(gear) # of forward gears',FALSE),
+      checkboxInput('carb','(carb) # of carburetors',FALSE),
+      submitButton('Submit')
+    ),
+    mainPanel(      
+      h2('Results of your regression'),
+      h3('Your model estimates:'),
+      verbatimTextOutput('fitSummary'),
+      h3('Coefficients statistically significant at 5%:'),
+      verbatimTextOutput('signif'),
+      h3('Your model RMSE:'),
+      verbatimTextOutput('fitRMSE'),
+      h3('Actual vs Fitted plot:'),
+      plotOutput('fittedPlot'),
+      h2('Residuals Analysis'),
+      h3('Residual plot:'),
+      plotOutput('residPlot'),
+      h3('Shapiro-Wilk Normality Test:'),
+      verbatimTextOutput('shapiro'),
+      h4('Obs.: Null hypothesis = normality'),
+      h4(uiOutput('shapiro.p')),
+      h3('Breusch-Pagan Heteroskedasticity Test:'),
+      verbatimTextOutput('breusch'),
+      h4('Obs.: Null hypothesis = homoskedasticity'),
+      h4(uiOutput('breusch.p')),
+      h3('Durbin-Watson Serial Correlation Test:'),
+      verbatimTextOutput('durbin'),
+      h4('Obs.: Null hypothesis = no serial correlation'),
+      h4(uiOutput('durbin.p'))
+    )
+  )
+)
